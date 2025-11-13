@@ -4,3 +4,8 @@ Linux commands
 3.ls
 4.vim
 5.nano
+6.ls -alh
+7.man
+8.rm
+9.mv
+10.string
