@@ -1,0 +1,6 @@
+Linux commands
+1.pwd 
+2.cat
+3.ls
+4.vim
+5.nano
