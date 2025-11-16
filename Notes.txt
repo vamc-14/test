@@ -50,3 +50,35 @@
 |   chmod 755 file     | Change permissions     |
 |   chmod +x file.sh   | Make script executable |
 |   chown user file    | Change owner           |
+
+6. System Info
+
+| Command      | Meaning                            |
+| ------------ | ---------------------------------- |
+|   uname -a   | System information                 |
+|   top        | Running processes                  |
+|   htop       | Better process view (if installed) |
+|   whoami     | Show current user                  |
+|   uptime     | System running time                |
+
+
+7. Network
+
+| Command             | Meaning           |
+| ------------------- | ----------------- |
+|   ifconfig          | Show network info |
+|   ip a              | Show IP details   |
+|   ping google.com   | Check internet    |
+|   curl url          | Get data from URL |
+
+
+
+8. Package Install (Ubuntu/Debian)
+
+| Command                  | Meaning              |
+| ------------------------ | -------------------- |
+|   sudo apt update        | Refresh packages     |
+|   sudo apt upgrade       | Upgrade all packages |
+|   sudo apt install pkg   | Install package      |
+|   sudo apt remove pkg    | Uninstall package    |
+
