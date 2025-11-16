@@ -23,3 +23,30 @@
 |   mv a.txt b.txt   | Move / Rename file           |
 |   rm file.txt      | Delete file                  |
 |   rm -r folder     | Delete folder with all files |
+
+3. Folder Commands
+
+| Command           | Meaning                |
+| ----------------- | ---------------------- |
+|   mkdir test      | Make new directory     |
+|   rmdir test      | Remove empty directory |
+|   du -sh folder   | Check folder size      |
+|   df -h           | Check disk space       |
+
+
+4.Searching Commands
+
+| Command                     | Meaning                 |
+| --------------------------- | ----------------------- |
+| **find . -name "file.txt"** | Search file             |
+| **grep "text" file.txt**    | Find text inside file   |
+| **grep -i "text" file.txt** | Case-insensitive search |
+
+
+5. Permission Commands
+
+| Command              | Meaning                |
+| -------------------- | ---------------------- |
+|   chmod 755 file     | Change permissions     |
+|   chmod +x file.sh   | Make script executable |
+|   chown user file    | Change owner           |
