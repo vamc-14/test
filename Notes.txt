@@ -1,0 +1,25 @@
+1. Directory Commands
+
+| Command       | Meaning                     |
+| ------------- | --------------------------- |
+|   ls          | Show files and folders      |
+|   ls -l       | Show detailed list          |
+|   ls -a       | Show hidden files (. files) |
+|   cd folder   | Go into a folder            |
+|   cd ..       | Go back                     |
+|   cd /        | Go to root folder           |
+|   cd ~        | Go to home folder           |
+|   pwd         | Show current path           |
+
+2.File Commands
+
+| Command            | Meaning                      |
+| ------------------ | ---------------------------- |
+|   touch file.txt   | Create an empty file         |
+|   cat file.txt     | View file content            |
+|   nano file.txt    | Edit a file                  |
+|   vim file.txt     | Edit using vim editor        |
+|   cp a.txt b.txt   | Copy file                    |
+|   mv a.txt b.txt   | Move / Rename file           |
+|   rm file.txt      | Delete file                  |
+|   rm -r folder     | Delete folder with all files |
