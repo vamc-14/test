@@ -1,0 +1,177 @@
+#Django deployment..
+
+
+
+
+  752  mkdir project1
+  753  cd project1/
+  756  python -m venv venv
+  757  source venv/bin/activate
+  755  pip install Django
+       pip install gunicorn
+  754  python -m django --version (optional)
+  761  django-admin startproject wheelsmart .
+  762  ls
+  766  python manage.py migrate
+  767  python manage.py runserver 0.0.0.0:8888
+       
+ 
+
+
+
+
+
+### Stage-1 setup the code
+
+1. clone the repo ...
+git clone https://github.com/vamc-14/django-helloworld.git
+
+2. change directory to project
+cd django-helloworld
+
+3. check .env file
+nano .env
+vim .env
+# update database credentials
+
+3. create a python virtual environment
+python -m venv venv
+
+4. enable python virtual environment
+source venv/bin/activate (for linux)
+.\venv\Scripts\activate (for windows)
+
+5. install dependencies
+pip install -r requirements.txt ############
+pip install -r requirements/base.txt
+pip install -r requirements/development.txt
+pip install -r requirements/production.txt
+
+6. migrations   #### error ... db error 
+python manage.py migrate (migration will create a database tables)
+
+7. run the code
+python manage.py runserver #( for development )
+
+# pip install gunicorn
+gunicorn helloworld.wsgi:application --bind 0.0.0.0:8000 #( on deployment )
+
+* disable python virtual environment
+source venv/bin/deactivate
+
++++++++++++++++++++++++++++++++
+
+### Stage-2 configure the deamon-service
+
+gunicorn helloworld.wsgi:application --bind 0.0.0.0:8000
+
+## we are ready to config deamon-services..
+1. create a service file ..
+sudo touch /etc/systemd/system/helloworld.service
+
+2. open file with cli editor (nano,vim,vi)
+sudo nano /etc/systemd/system/helloworld.service
+
+```
+[Unit]
+Description=Gunicorn service for helloworld Django project
+After=network.target
+
+[Service]
+User=vamsi
+Group=www-data
+WorkingDirectory=/home/vamsi/django-helloworld
+ExecStart=/home/vamsi/django-helloworld/venv/bin/gunicorn \
+        --workers 3 \
+        --bind 0.0.0.0:8000 \
+        helloworld.wsgi:application
+
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+```
+
+3. restart the deamon service..
+
+* check the status
+sudo systemctl status helloworld.service
+
+* start
+sudo systemctl start helloworld.service
+
+* restart
+sudo systemctl restart helloworld.service
+
+* stop
+sudo systemctl stop helloworld.service
+
+* enable
+sudo systemctl enable helloworld.service
+
+* disable
+sudo systemctl disable helloworld.service
+ 
+++++++++++++++++++++++++++++++
+
+### Stage-3 nginx reverse proxy
+
+1. install nginx
+sudo apt install nginx
+
+ls /etc/nginx/ [nginx all conf path]
+
+Rename www data to root
+ls /etc/nginx/nginx.conf # file
+user === www-data ==> root
+
+ls /etc/nginx/sites-available/
+ls /etc/nginx/sites-enabled/
+
+*. disable default config
+
+sudo unlink /etc/nginx/sites-enabled/default
+#sudo rm /etc/nginx/sites-enabled/default
+
+sudo nginx -t #(check the nginx conf)
+sudo systemctl restart nginx
+sudo systemctl status nginx
+
+===========================================================
+
+sudo nano /etc/nginx/sites-available/mysite.conf
+
+server {
+    listen 80;
+    server_name localhost;
+
+    location /mysite {
+        proxy_pass         http://127.0.0.1:8888;
+        proxy_set_header   Host $host;
+        proxy_set_header   X-Real-IP $remote_addr;
+        proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header   X-Forwarded-Proto $scheme;
+    }
+    location /hrms {
+        proxy_pass         http://127.0.0.1:9696;
+        proxy_set_header   Host $host;
+        proxy_set_header   X-Real-IP $remote_addr;
+        proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header   X-Forwarded-Proto $scheme;
+    }
+
+}
+
+sudo ln /etc/nginx/sites-available/mysite.conf /etc/nginx/sites-enabled/
+sudo nginx -t
+
+sudo systemctl restart nginx
+sudo systemctl status nginx
+
+
+
+
+
+
+
+
